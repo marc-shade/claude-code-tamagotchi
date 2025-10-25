@@ -38,10 +38,56 @@ export class WatchdogThoughts {
     // Generate context-aware thoughts based on stats
     if (stats.recent_violations === 0) {
       const goodThoughts = [
+        // Classic encouragement
         "Watchdog's happy! No violations detected! 🎯",
         "Claude's been perfectly on-task today! ✨",
         "Zero drift detected - Claude's laser-focused! 🎯",
-        "Watchdog gives Claude two paws up! 👍👍"
+        "Watchdog gives Claude two paws up! 👍👍",
+
+        // Coding humor
+        "No bugs in the watchdog log! Unlike your code... 😏",
+        "Clean bill of health! No exceptions thrown here 🏥",
+        "All tests passing! Wait, wrong monitor... 🧪",
+        "No task drift detected. You're not a blockchain! ⛓️",
+        "Perfect execution! No segfaults in focus today 💯",
+        "Code review: APPROVED! Ship it! 🚢",
+
+        // Dog/watchdog themed
+        "This dog's not barking! All quiet on the focus front 🐕",
+        "Tail wagging at maximum productivity! 🐾",
+        "Good boy! Stay! ...on task! 🦴",
+        "No squirrels spotted in the codebase today 🐿️",
+        "Watchdog says: 10/10 would monitor again 🌟",
+        "Sniffed around, found only quality work 👃",
+
+        // Playful observations
+        "Impressive focus! Are you even human? 🤖",
+        "Task adherence level: Jedi Master 🧘",
+        "You're in the zone! The focused zone! 🎯",
+        "Distraction-free since [checks notes] ...a while! ⏰",
+        "Flow state achieved! Don't wake the coder 💤",
+        "Who's a good coder? YOU are! 🎖️",
+
+        // Tech references
+        "No 404s in your focus today! 🌐",
+        "Uptime: 100%. Violations: 0%. Math checks out ✅",
+        "Connection stable. Focus bandwidth: unlimited 📡",
+        "Zero memory leaks in task management 🧠",
+        "Latency: low. Productivity: high. Chef's kiss 👨‍🍳",
+
+        // Witty commentary
+        "Plot twist: You're actually doing the thing! 😲",
+        "Breaking news: Developer stays on task. More at 11 📰",
+        "Is this... is this discipline? In MY codebase? 💪",
+        "Achievement unlocked: Basic Task Completion 🏆",
+        "Your focus is making me look bad. Keep it up! 😤",
+
+        // Encouraging
+        "Absolutely crushing it today! 💥",
+        "The flow is strong with this one ⚡",
+        "Peak performance detected! 📈",
+        "This is what productivity looks like! 🎨",
+        "Can't complain even if I wanted to! 😊"
       ];
       return goodThoughts[Math.floor(Math.random() * goodThoughts.length)];
     }
