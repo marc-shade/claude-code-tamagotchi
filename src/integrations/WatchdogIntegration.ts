@@ -110,7 +110,8 @@ export class WatchdogIntegration {
   }
 
   /**
-   * Get a thought based on watchdog data
+   * Get a thought based on watchdog data (violations only)
+   * Returns null for no violations - let WatchdogThoughts handle good messages
    */
   getWatchdogThought(): string | null {
     if (!this.isEnabled()) return null;
@@ -118,9 +119,9 @@ export class WatchdogIntegration {
     const stats = this.getStats();
     if (!stats) return null;
 
-    // No violations - all good
+    // No violations - return null to let WatchdogThoughts show creative messages
     if (stats.recent_violations === 0 && stats.total_violations === 0) {
-      return "Watchdog reports: All clear! Claude's been behaving perfectly! 🎯";
+      return null;
     }
 
     // Recent violations
