@@ -3,10 +3,16 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as os from 'os';
 
-// Load .env file
+// Load .env file from project directory
 const envPath = path.join(__dirname, '../../.env');
 if (fs.existsSync(envPath)) {
   dotenv.config({ path: envPath });
+}
+
+// Load .tamagotchi.env from home directory (has priority)
+const tamagotchiEnvPath = path.join(os.homedir(), '.tamagotchi.env');
+if (fs.existsSync(tamagotchiEnvPath)) {
+  dotenv.config({ path: tamagotchiEnvPath, override: true });
 }
 
 // Helper to resolve tilde in paths
