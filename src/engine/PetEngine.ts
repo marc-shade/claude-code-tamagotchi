@@ -2,6 +2,7 @@ import { StateManager, PetState } from './StateManager';
 import { AnimationManager } from './AnimationManager';
 import { ActivitySystem } from './ActivitySystem';
 import { FeedbackSystem } from './feedback/FeedbackSystem';
+import { WatchdogThoughts } from './WatchdogThoughts';
 import { config } from '../utils/config';
 import * as fs from 'fs';
 
@@ -16,15 +17,17 @@ export class PetEngine {
   private animationManager: AnimationManager;
   private activitySystem: ActivitySystem;
   private feedbackSystem: FeedbackSystem;
+  private watchdogThoughts: WatchdogThoughts;
   private state: PetState | null = null;
   private transcriptPath?: string;
   private sessionId?: string;
-  
+
   constructor() {
     this.stateManager = new StateManager();
     this.animationManager = new AnimationManager();
     this.activitySystem = new ActivitySystem();
     this.feedbackSystem = new FeedbackSystem();
+    this.watchdogThoughts = new WatchdogThoughts();
   }
   
   async initialize(): Promise<void> {
@@ -424,25 +427,31 @@ export class PetEngine {
   
   getCurrentThought(): string | null {
     if (!this.state) return null;
-    
-    // Check for feedback thought (conversation-relevant)
+
+    // Priority 1: Watchdog thoughts (real system data)
+    const watchdogThought = this.watchdogThoughts.getThought(this.state);
+    if (watchdogThought) {
+      return watchdogThought;
+    }
+
+    // Priority 2: Feedback thought (conversation-relevant)
     const feedbackThought = this.feedbackSystem.getFeedbackThought(this.state);
-    
+
     // Use ratio to decide which type of thought to show
     if (feedbackThought && Math.random() < config.conversationThoughtRatio) {
       // Show conversation-relevant thought (funny observation about the code)
       return feedbackThought;
     }
-    
-    // Fall back to regular thought (mood/stats based)
+
+    // Priority 3: Fall back to regular thought (mood/stats based)
     if (!this.state.currentThought) return null;
-    
+
     // Thoughts last longer than system messages
     const thoughtAge = Date.now() - (this.state.thoughtTimestamp || 0);
     if (thoughtAge > 30000) { // 30 seconds
       return null;
     }
-    
+
     return this.state.currentThought;
   }
   
