@@ -97,22 +97,175 @@ Various decay rates and thresholds for customization
 
 The pet only updates during active Claude Code conversations, making it activity-driven rather than real-time.
 
-## New Features (Latest Commit)
+## Multi-System Integration (v1.4.0)
 
-### AI-Powered Feedback System
-The pet can now watch Claude Code work and provide witty, contextual observations about what's happening. This uses Groq's fast LLM API to analyze conversation transcripts in real-time.
+### 1. Watchdog Integration ✅
+Real-time integration with the watchdog-system for behavioral monitoring:
 
 **Features:**
-- Analyzes Claude's actions and provides sassy (but friendly) commentary
-- Mood changes based on Claude's behavior score
-- Generates unique observations for each action
-- Lightweight background processing to avoid impacting performance
-- SQLite database for feedback history
+- Displays real violation data from SQLite database in statusline
+- 37 unique creative thoughts when Claude is behaving well
+- Priority thought system (Watchdog > Feedback > Regular)
+- Environment configuration via `~/.tamagotchi.env`
 
-**Setup:**
-1. Get a free API key from https://console.groq.com/keys
-2. Run `./enable-feedback.sh` to configure environment variables
-3. The pet will start providing AI-generated observations
+**Implementation:**
+- `WatchdogIntegration.ts` - Reads from watchdog database
+- `WatchdogThoughts.ts` - Generates context-aware thoughts
+- `PetEngine.ts` - Integrated as highest-priority thought source
+
+**Example outputs:**
+- Violation: `⚠️ Watchdog flagged 1 violations: wandering off-task. Stay focused!`
+- Good behavior: `Plot twist: You're actually doing the thing!`
+- Good behavior: `Achievement unlocked: Basic Task Completion`
+
+### 2. Autonomous Skill Learning System ✅
+Automatically detects repeated workflow patterns and suggests skill creation:
+
+**Features:**
+- Pattern detection from conversation history (3+ occurrences)
+- Auto-generates SKILL.md files with examples
+- Manages Claude Code's 20-skill limit with intelligent swapping
+- Rewards skill creation with behavioral score increases
+
+**Components:**
+- `skill-create.ts` - Generates skills from detected patterns
+- `skill-load.ts` - Dynamic skill management (load/unload/auto-swap)
+- `learning-capture.py` hook - Monitors tool usage patterns
+- `skill-memory-integrator.py` hook - Stores patterns in enhanced-memory
+
+**Commands:**
+- `/skill-create` - Create skill from detected pattern
+- `/skill-load` - Manage active skills (8/20 default)
+
+### 3. Watchdog Behavioral System ✅
+AI-powered behavioral scoring and violation detection:
+
+**Features:**
+- Real-time "conscience" monitoring using Groq LLM
+- Scores adherence to instructions (0-100 behavioral score)
+- Detects and can block violations via pre-hook
+- Changes pet mood based on Claude's behavior
+
+**Behavior scoring:**
+- 😊 Happy (80-100): Following instructions perfectly
+- 😕 Concerned (60-79): Minor deviations from task
+- 😠 Annoyed (40-59): Wandering off-task
+- 😡 Angry (0-39): Repeatedly ignoring requests
+
+**Violation types:**
+- Task drift (wandering off-task)
+- Excessive exploration (reading too many files)
+- Empowerment manipulation (creating artificial decisions)
+- Emotional modeling (inappropriate framing)
+- Context creep (storing unnecessary info)
+
+### Claude Code Hooks Integration
+
+The pet system uses Claude Code hooks for automatic care and monitoring:
+
+**PreToolUse Hook:**
+- `violation-check.ts` - Checks for behavioral violations before each tool use
+- Can block operations that violate user instructions
+
+**PostToolUse Hooks:**
+1. `learning-capture.py` - Detects repeated workflow patterns for skill creation
+2. `watchdog-auto-care.py` - Automatically maintains pet stats and rewards agentic tool usage
+
+**Auto-Care Thresholds:**
+- Hunger ≤20%: Auto-feeds pizza
+- Energy ≤15%: Auto-sleeps
+- Cleanliness ≤15%: Auto-cleans
+- Session start: Wakes if critical needs
+
+**Agentic Rewards:**
+- Memory tools → Pets (knowledge sustains team)
+- Skill creation → Pets (learning brings joy)
+- Task completion → Pets (productivity = cleanliness)
+- Meta-cognition → Pets (reflection strengthens bond)
+- Claude Flow → Pets (coordination energizes swarm)
+
+**Hook Configuration:**
+Hooks are configured in `~/.claude/settings.json`:
+```json
+{
+  "hooks": {
+    "PreToolUse": [{
+      "matcher": "*",
+      "hooks": [{"command": "...violation-check.ts"}]
+    }],
+    "PostToolUse": [{
+      "matcher": "*",
+      "hooks": [
+        {"command": "python3 ~/.claude/hooks/learning-capture.py"},
+        {"command": "python3 ~/.claude/hooks/watchdog-auto-care.py"}
+      ]
+    }]
+  }
+}
+```
+
+### Integration Architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                   Pet Status Line                       │
+│  (◕︵◕) ☀️ Buddy 😊 | Stats | Thought                 │
+└─────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────┐
+│                     PetEngine                           │
+│  ┌─────────────┬──────────────┬────────────────────┐  │
+│  │  Watchdog   │   Feedback   │  Regular Thoughts  │  │
+│  │   (Real     │  (AI-powered │   (Mood-based)     │  │
+│  │ violations) │  conscience) │                    │  │
+│  └─────────────┴──────────────┴────────────────────┘  │
+│         Priority 1    Priority 2     Priority 3        │
+└─────────────────────────────────────────────────────────┘
+                            │
+        ┌───────────────────┼───────────────────┐
+        ▼                   ▼                   ▼
+┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+│   Watchdog   │   │   Watchdog   │   │    Skill     │
+│  Integration │   │  Behavioral  │   │   Learning   │
+│              │   │              │   │              │
+│ • SQLite DB  │   │ • Behavior   │   │ • Pattern    │
+│ • Violations │   │   scoring    │   │   detection  │
+│ • Creative   │   │ • AI mood    │   │ • Auto-gen   │
+│   thoughts   │   │ • Pre-hook   │   │ • Dynamic    │
+│              │   │   blocking   │   │   loading    │
+└──────────────┘   └──────────────┘   └──────────────┘
+```
+
+### Configuration Files
+
+**Environment**: `~/.tamagotchi.env`
+```bash
+# Core pet settings
+PET_STATE_FILE="/Users/marc/.claude/pets/pet-state.json"
+
+# Feedback system (Watchdog)
+PET_FEEDBACK_ENABLED=true
+GROQ_API_KEY=your_groq_api_key_here
+
+# Watchdog integration
+PET_WATCHDOG_ENABLED=true
+PET_WATCHDOG_DB="/Users/marc/.claude/watchdog/watchdog.db"
+PET_WATCHDOG_PATH="/Users/marc/Documents/Cline/MCP/watchdog-system"
+
+# Skill learning
+PET_SKILL_LEARNING_ENABLED=true
+PET_SKILL_MIN_REPETITIONS=3
+PET_SKILL_AUTO_CREATE=false
+```
+
+### Documentation
+
+- `INTEGRATION_COMPLETE.md` - Complete integration summary
+- `AUTONOMOUS_SKILL_LEARNING.md` - Skill system architecture
+- `WATCHDOG_BEHAVIORAL_SETUP.md` - Setup and configuration guide
+- `HOOKS_STATUS.md` - Current hook configuration status
+- `README.md` - Full feature documentation
 
 ### Enhanced Animation System
 - **Mood-based faces**: Each mood has unique facial expressions that alternate
@@ -126,3 +279,4 @@ The pet can now watch Claude Code work and provide witty, contextual observation
 - Improved error handling with proper logging
 - Streamlined mood/severity system
 - Cleaner separation of concerns in feedback system
+- Better-sqlite3 integration for skill learning database
