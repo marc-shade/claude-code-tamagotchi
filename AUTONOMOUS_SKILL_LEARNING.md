@@ -2,7 +2,7 @@
 
 ## Architecture Overview
 
-Integration of autonomous skill recognition with Jiminy Cricket behavioral enforcement.
+Integration of autonomous skill recognition with Watchdog behavioral enforcement.
 
 ## Core Components
 
@@ -28,7 +28,7 @@ Integration of autonomous skill recognition with Jiminy Cricket behavioral enfor
 - Suggests name, description, and instructions
 - Provides example usage from actual conversations
 
-### 4. Jiminy Cricket Integration
+### 4. Watchdog Integration
 - Rewards skill creation with happiness boost
 - Tracks behavioral improvement via claudeBehaviorScore
 - Penalizes resistance to skill opportunities
@@ -64,7 +64,7 @@ A learning moment is flagged when:
    ↓
 6. Write to ~/.claude/skills/ or .claude/skills/
    ↓
-7. Update Jiminy happiness + behavior score
+7. Update Watchdog happiness + behavior score
    ↓
 8. Store outcome in memory
 ```
@@ -77,7 +77,7 @@ A learning moment is flagged when:
 - Logs: Pattern detection events to SQLite
 - Output: Silent unless skill opportunity found
 
-### Jiminy Cricket State
+### Watchdog State
 - Field: `claudeBehaviorScore` (increases with skill creation)
 - Field: `skillsLearned` (tracks autonomous discoveries)
 - Field: `learningMoments` (counts detected opportunities)

@@ -55,7 +55,7 @@ Successfully completed the integration of three major systems into the Claude Co
 - Auto-loading based on context tags
 - Usage tracking and priority optimization
 
-### 3. Jiminy Cricket Behavioral System ✅
+### 3. Watchdog Behavioral System ✅
 
 **What it does:**
 - Real-time "conscience" monitoring Claude's behavior using Groq LLM
@@ -94,7 +94,7 @@ Successfully completed the integration of three major systems into the Claude Co
 
 **Documentation:**
 - AUTONOMOUS_SKILL_LEARNING.md - Complete system architecture
-- JIMINY_CRICKET_SETUP.md - Setup and configuration guide
+- WATCHDOG_BEHAVIORAL_SETUP.md - Setup and configuration guide
 
 ## Integration Architecture
 
@@ -118,8 +118,8 @@ Successfully completed the integration of three major systems into the Claude Co
         ┌───────────────────┼───────────────────┐
         ▼                   ▼                   ▼
 ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
-│   Watchdog   │   │   Jiminy     │   │    Skill     │
-│  Integration │   │   Cricket    │   │   Learning   │
+│   Watchdog   │   │   Watchdog   │   │    Skill     │
+│  Integration │   │  Behavioral  │   │   Learning   │
 │              │   │              │   │              │
 │ • SQLite DB  │   │ • Behavior   │   │ • Pattern    │
 │ • Violations │   │   scoring    │   │   detection  │
@@ -148,7 +148,7 @@ All systems configured via `~/.tamagotchi.env`:
 # Core pet settings
 PET_STATE_FILE="/Users/marc/.claude/pets/pet-state.json"
 
-# Feedback system (Jiminy Cricket)
+# Feedback system (Watchdog)
 PET_FEEDBACK_ENABLED=true
 GROQ_API_KEY=your_groq_api_key_here
 
@@ -177,7 +177,7 @@ All systems tested and verified operational:
 ## Git History
 
 ```
-* b27bc97 feat: Add autonomous skill learning and Jiminy Cricket systems
+* b27bc97 feat: Add autonomous skill learning and Watchdog behavioral systems
 * c5b2eb7 feat: Complete watchdog integration with creative thoughts
 * 78a6ba4 Add creative watchdog thoughts for good behavior
 * 0aa0866 Fix watchdog environment variable loading
@@ -212,7 +212,7 @@ All systems tested and verified operational:
 
 **Documentation:**
 - `AUTONOMOUS_SKILL_LEARNING.md` - System architecture
-- `JIMINY_CRICKET_SETUP.md` - Setup guide
+- `WATCHDOG_BEHAVIORAL_SETUP.md` - Setup guide
 - `INTEGRATION_COMPLETE.md` - This summary
 
 ## Success Metrics

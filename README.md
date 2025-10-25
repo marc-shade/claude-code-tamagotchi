@@ -254,6 +254,99 @@ export PET_VIOLATION_CHECK_ENABLED=true
 - 💰 **Extremely cheap** - Practically free for personal use
 - 🚀 **Custom chips** - Purpose-built for instant LLM inference
 
+## Advanced Multi-System Integration 🔗
+
+Your pet now integrates with multiple monitoring and learning systems for enhanced capabilities:
+
+### Watchdog Integration
+
+Real-time integration with [watchdog-system](https://github.com/marc-shade/watchdog-system) for focus monitoring:
+
+```
+💭 ⚠️ Watchdog flagged 1 violations: wandering off-task. Stay focused!
+```
+
+**Features:**
+- **Real Violation Data**: Displays actual violations from watchdog database
+- **Creative Thoughts**: 37 unique messages when Claude is behaving well
+- **Smart Prioritization**: Watchdog thoughts > AI thoughts > Regular thoughts
+
+**Creative Examples (when no violations):**
+```
+💭 Plot twist: You're actually doing the thing! 😲
+💭 No 404s in your focus today! 🌐
+💭 Achievement unlocked: Basic Task Completion 🏆
+💭 Watchdog gives Claude two paws up! 👍👍
+💭 This dog's not barking! All quiet on the focus front 🐕
+```
+
+**Setup:**
+```bash
+# Enable watchdog integration
+export PET_WATCHDOG_ENABLED=true
+export PET_WATCHDOG_DB="/path/to/watchdog/watchdog.db"
+export PET_WATCHDOG_PATH="/path/to/watchdog-system"
+```
+
+### Autonomous Skill Learning
+
+Your pet learns from your workflow patterns and suggests creating reusable skills:
+
+**How It Works:**
+1. **Pattern Detection**: Monitors for repeated tool sequences (3+ occurrences)
+2. **Skill Proposals**: Suggests creating skills with auto-generated documentation
+3. **Behavioral Rewards**: Skill creation increases happiness and behavioral score
+4. **Dynamic Management**: Handles Claude Code's 20-skill limit intelligently
+
+**Commands:**
+- `/skill-create --list` - Show detected patterns
+- `/skill-create <pattern-hash>` - Create skill from pattern
+- `/skill-load list` - View active skills (current/max)
+- `/skill-load <skill-name>` - Activate a skill
+- `/skill-load --auto` - Auto-load based on context
+
+**Example:**
+```bash
+# List detected patterns
+/skill-create --list
+
+# Output:
+# 📊 Detected Workflow Patterns
+# Pattern: abc123
+# - Tools: Read → Edit → Bash (git commit)
+# - Occurrences: 5
+# - Impact: High (saves ~200 tokens per use)
+
+# Create the skill
+/skill-create abc123
+
+# Output:
+# ✓ Created skill: git-validated-commit
+# 🎯 Behavioral score: +5
+# 😊 Pet happiness increased!
+```
+
+**Configuration:**
+```bash
+export PET_SKILL_LEARNING_ENABLED=true
+export PET_SKILL_MIN_REPETITIONS=3
+export PET_SKILL_AUTO_CREATE=false
+```
+
+### Behavioral Score System
+
+All systems contribute to a unified behavioral score (0-100):
+- **Watchdog violations**: Decrease score
+- **Skill creation**: Increase score (+5 per skill)
+- **AI observations**: Adjust based on compliance
+- **Pet mood**: Reflects combined score
+
+The pet becomes your complete AI companion:
+- 📊 **Monitors**: Tracks focus and violations
+- 🧠 **Learns**: Detects patterns and suggests improvements
+- 🎯 **Rewards**: Positive reinforcement for good behaviors
+- 💭 **Comments**: Witty observations on everything
+
 ## Commands & Interaction
 
 You can interact with your pet in THREE ways:

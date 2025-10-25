@@ -1,4 +1,4 @@
-# Jiminy Cricket Tamagotchi Setup Complete
+# Watchdog Tamagotchi Setup Complete
 
 ## Installation Status
 
@@ -6,10 +6,10 @@
 ✅ **Dependencies**: All npm packages installed via Bun
 ✅ **Slash Commands**: Installed in `~/.claude/commands/`
 ✅ **Groq API Key**: Configured in `.env`
-✅ **Behavioral Monitoring**: Enabled with Jiminy Cricket personality
+✅ **Behavioral Monitoring**: Enabled with Watchdog personality
 ✅ **Tamagotchi**: Functional and tested
 
-## Groq AI Configuration (Jiminy Cricket Mode)
+## Groq AI Configuration (Watchdog Mode)
 
 The `.env` file is configured for real-time behavioral monitoring:
 
@@ -35,7 +35,7 @@ PET_DECAY_INTERVAL=5
 
 ## What This Does
 
-Your Tamagotchi pet is now configured as "Jiminy Cricket" - a conscience that monitors Claude's behavior in real-time using Groq's fast LLM API:
+Your Tamagotchi pet is now configured as "Watchdog" - a conscience that monitors Claude's behavior in real-time using Groq's fast LLM API:
 
 1. **Real-Time Observations**: Watches what Claude does and provides witty commentary
 2. **Behavioral Scoring**: Rates Claude's adherence to instructions
@@ -180,11 +180,11 @@ These are already installed in `~/.claude/commands/`:
 1. Stop Claude Code
 2. Add statusLine and hooks configurations to settings.json
 3. Restart Claude Code
-4. Your Jiminy Cricket conscience will be watching!
+4. Your Watchdog conscience will be watching!
 
 ---
 
-**Project**: Claude Code Tamagotchi - Jiminy Cricket Edition
+**Project**: Claude Code Tamagotchi - Watchdog Edition
 **Location**: /Users/marc/Documents/Cline/MCP/claude-code-tamagotchi
 **Configuration**: .env (Groq API configured)
 **Status**: ✅ Functional, awaiting manual settings configuration

@@ -3,7 +3,7 @@
  * Autonomous Skill Creation from Learning Patterns
  *
  * Generates SKILL.md files from detected workflow patterns
- * Integrates with Jiminy Cricket behavioral scoring
+ * Integrates with Watchdog behavioral scoring
  */
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
@@ -134,7 +134,7 @@ function createSkill(opportunity: SkillOpportunity): boolean {
     db.close();
   }
 
-  // Update Jiminy Cricket state
+  // Update Watchdog state
   const petState = getPetState();
   if (petState) {
     const updates = {
@@ -210,7 +210,7 @@ function main() {
     }
 
     console.log(`\n✓ Created ${created} skills`);
-    console.log('🎉 Jiminy is proud! +10 happiness, +5 behavior score');
+    console.log('🎉 Watchdog is proud! +10 happiness, +5 behavior score');
     return;
   }
 
@@ -235,7 +235,7 @@ function main() {
   if (createSkill(opportunity)) {
     console.log(`✓ Created skill: ${opportunity.auto_name}`);
     console.log(`  Location: ~/.claude/skills/${opportunity.auto_name}/SKILL.md`);
-    console.log('🎉 Jiminy is proud! +10 happiness, +5 behavior score');
+    console.log('🎉 Watchdog is proud! +10 happiness, +5 behavior score');
   } else {
     console.log(`Failed to create skill for pattern ${patternHash}`);
   }
